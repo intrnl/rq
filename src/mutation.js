@@ -31,19 +31,19 @@ export function useMutation (mutation, options) {
 				data = await mutation(variables);
 
 				update((prev) => ({ ...prev, status: 'success', data, error: null }));
-				onSuccess?.(data, variables, context);
+				await onSuccess?.(data, variables, context);
 			}
 			catch (err) {
 				error = err;
 
 				update((prev) => ({ ...prev, status: 'error', data: null, error }));
-				onError?.(error, variables, context);
+				await onError?.(error, variables, context);
 			}
 			finally {
 				update.promise = null;
 
 				update((prev) => ({ ...prev, mutating: false }));
-				onSettled?.(data, error, variables, context);
+				await onSettled?.(data, error, variables, context);
 			}
 		});
 	};
