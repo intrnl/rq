@@ -15,7 +15,7 @@ export const defaultQueryOptions = {
 	suspense: false,
 };
 
-const QueryContext = createContext();
+const QueryContext = createContext(defaultQueryOptions);
 
 export function useQueryConfig () {
 	return useContext(QueryContext);
