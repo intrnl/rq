@@ -35,6 +35,13 @@ export type QueryState<T> =
 	| QuerySuccessState<T>
 	| QueryErrorState
 
+export interface QueryMethods<D> {
+	mutate (data?: D, invalidate?: boolean): void;
+	revalidate (): void;
+}
+
+export type QueryResult<D> = QueryState<D> & QueryMethods<D>;
+
 export interface Query<T> {
 	listeners: Set<() => void>;
 
@@ -55,7 +62,7 @@ export interface QueryOptions<D, K extends QueryKey = QueryKey> extends QueryCon
 	disabled?: boolean;
 }
 
-export function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOptions<D, K>): QueryState<D>;
+export function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOptions<D, K>): QueryResult<D>;
 
 export function mutateQuery (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean): void;
 
