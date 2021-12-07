@@ -18,11 +18,13 @@ export function useQueryConfig () {
 }
 
 export function QueryProvider (props) {
-	const { options, children } = props;
+	const { options: next, children } = props;
+
+	const prev = useQueryConfig();
 
 	const mergedOptions = useMemo(
-		() => ({ ...defaultQueryOptions, ...options }),
-		[options],
+		() => ({ ...prev, ...next }),
+		[next],
 	);
 
 	return h(QueryContext.Provider, { value: mergedOptions, children });
