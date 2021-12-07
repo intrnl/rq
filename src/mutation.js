@@ -10,7 +10,7 @@ function init () {
 	};
 }
 
-export function useMutation (mutation, options) {
+export function useMutation (mutation, options = {}) {
 	const { onMutate, onSuccess, onError, onSettled } = options;
 	const [state, update] = useReducer(updateReducer, null, init);
 
