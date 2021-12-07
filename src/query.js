@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'preact/hooks';
-import { stringify } from '@intrnl/stable-stringify
+import { stringify } from '@intrnl/stable-stringify';
 
 import { useQueryConfig } from './context.js';
 import { listenFocusChange } from './focus.js';
