@@ -23,15 +23,19 @@ export function useMutation (mutation, options) {
 			}));
 
 			let context;
+			let data;
+			let error;
 
 			try {
 				context = await onMutate?.(variables);
-				const data = await mutation(variables);
+				data = await mutation(variables);
 
 				update((prev) => ({ ...prev, status: 'success', data, error: null }));
 				onSuccess?.(data, variables, context);
 			}
-			catch (error) {
+			catch (err) {
+				error = err;
+
 				update((prev) => ({ ...prev, status: 'error', data: null, error }));
 				onError?.(error, variables, context);
 			}
@@ -39,7 +43,7 @@ export function useMutation (mutation, options) {
 				update.promise = null;
 
 				update((prev) => ({ ...prev, mutating: false }));
-				onSettled?.(variables, context);
+				onSettled?.(data, error, variables, context);
 			}
 		});
 	};
