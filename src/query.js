@@ -192,7 +192,6 @@ class Query {
 	timeout;
 	promise;
 
-	key;
 	state = {
 		status: 'loading',
 		data: null,
