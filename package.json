@@ -1,0 +1,22 @@
+{
+	"type": "module",
+	"sideEffects": false,
+	"name": "@intrnl/rq",
+	"description": "Lightweight data fetching library for Preact",
+	"version": "0.1.0",
+	"author": "intrnl",
+	"license": "MIT",
+	"repository": {
+		"url": "https://github.com/intrnl/rq"
+	},
+	"files": [
+		"src/"
+	],
+	"main": "src/index.js",
+	"peerDependencies": {
+		"preact": "^10.6.2"
+	},
+	"devDependencies": {
+		"preact": "^10.6.2"
+	}
+}
