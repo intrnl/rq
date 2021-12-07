@@ -16,6 +16,9 @@
 	"peerDependencies": {
 		"preact": "^10.6.2"
 	},
+	"dependencies": {
+		"@intrnl/stable-stringify": "^0.1.0"
+	},
 	"devDependencies": {
 		"preact": "^10.6.2"
 	}

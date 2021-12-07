@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from 'preact/hooks';
+import { stringify } from '@intrnl/stable-stringify
 
 import { useQueryConfig } from './context.js';
 import { listenFocusChange } from './focus.js';
-import { stringify } from './utils.js';
 
 
 export function useQuery (options) {
@@ -11,6 +11,7 @@ export function useQuery (options) {
 	const {
 		key,
 		fetch,
+		disabled,
 
 		cache,
 
@@ -20,6 +21,7 @@ export function useQuery (options) {
 		revalidateOnFocus,
 
 		suspense,
+		errorBoundary,
 	} = options;
 
 	const forceUpdate = useForceUpdate();
@@ -35,7 +37,7 @@ export function useQuery (options) {
 	const revalidate = async () => {
 		const curr = query.state;
 
-		if (!curr.invalidated && curr.updated && (Date.now() - curr.updated < staleTime)) {
+		if (disabled || (!curr.invalidated && curr.updated && (Date.now() - curr.updated < staleTime))) {
 			return;
 		}
 
@@ -77,24 +79,21 @@ export function useQuery (options) {
 		const unsubscribe = query.subscribe(forceUpdate);
 		clearTimeout(query.timeout);
 
-		if (revalidateOnMount) {
-			revalidate();
-		}
-
 		return () => {
 			unsubscribe();
 
 			if (!query.listeners.length) {
-				// in Suspense mode, errors are immediately thrown and usually caught
-				// by error boundaries. Rather than exposing a method to somehow reset
-				// these queries, it might be better if we just clear it immediately.
+				// with `errorBoundary` enabled, errors are thrown immediately to be
+				// caught by error boundaries. Rather than having to manually reset
+				// the queries thrown that way, it might be better if we just dispose
+				// of them immediately.
 
-				// This doesn't handle cases such as when you have both Suspense and
-				// non-Suspense queries on the same key, but at that point you might
-				// want to invalidate them manually.
+				// This doesn't handle cases where you have users with both the option
+				// enabled and disabled, but at that point you might want to invalidate
+				// them manually.
 
-				const timeout = suspense && query.state.status === 'error'
-					? 0
+				const timeout = errorBoundary && query.state.status === 'error'
+					? 50
 					: cacheTime;
 
 				query.timeout = setTimeout(() => cache.delete(hash), timeout);
@@ -103,30 +102,41 @@ export function useQuery (options) {
 	}, [query]);
 
 	useEffect(() => {
-		if (!revalidateOnFocus) {
+		if (disabled || !revalidateOnMount) {
+			return;
+		}
+
+		revalidate();
+	}, [disabled, query]);
+
+	useEffect(() => {
+		if (disabled || !revalidateOnFocus) {
 			return;
 		}
 
 		const unsubscribeFocus = listenFocusChange(revalidate);
 		return unsubscribeFocus;
-	}, [query, revalidateOnFocus]);
+	}, [disabled, query, revalidateOnFocus]);
+
 
 	const state = query.state;
-
 	const status = state.status;
 	const invalidated = state.invalidated;
 
-	if (suspense) {
-		if (status === 'loading' || (status === 'error' && invalidated)) {
-			throw revalidate();
+	if (!disabled) {
+		if (suspense) {
+			if (status === 'loading' || (status === 'error' && invalidated)) {
+				throw revalidate();
+			}
 		}
-		else if (status === 'error') {
-			throw state.error;
+
+		if (invalidated && !state.fetching) {
+			revalidate();
 		}
 	}
 
-	if (invalidated && !state.fetching) {
-		revalidate();
+	if (errorBoundary && status === 'error') {
+		throw state.error;
 	}
 
 	return { ...state, mutate, revalidate };
@@ -182,6 +192,7 @@ class Query {
 	timeout;
 	promise;
 
+	key;
 	state = {
 		status: 'loading',
 		data: null,
