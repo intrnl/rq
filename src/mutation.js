@@ -7,6 +7,7 @@ function init () {
 		status: 'idle',
 		data: null,
 		error: null,
+		mutating: false,
 	};
 }
 
@@ -16,7 +17,11 @@ export function useMutation (mutation, options) {
 
 	const mutate = async (variables) => {
 		return state.promise ||= (async () => {
-			update((prev) => ({ ...prev, status: 'loading' }));
+			update((prev) => ({
+				...prev,
+				status: prev.status === 'idle' ? 'loading' : prev.status,
+				mutating: true,
+			}));
 
 			let context;
 
@@ -33,6 +38,7 @@ export function useMutation (mutation, options) {
 			}
 			finally {
 				state.promise = null;
+				update((prev) => ({ ...prev, mutating: false }));
 				onSettled?.(variables, context);
 			}
 		});
