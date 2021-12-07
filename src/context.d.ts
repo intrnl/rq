@@ -12,7 +12,7 @@ export type QueryFunction<D, K extends QueryKey = QueryKey> = (...params: Ensure
 
 export type QueryCache = Map<string, Query<any>>;
 
-export interface QueryContextOptions<D = unknown, K extends QueryKey = QueryKey> {
+export interface QueryContextOptions<D = any, K extends QueryKey = QueryKey> {
 	fetch?: QueryFunction<D, K>;
 
 	cache?: QueryCache;
