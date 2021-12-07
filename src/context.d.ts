@@ -31,5 +31,7 @@ export interface QueryProviderProps {
 	children: ComponentChildren;
 }
 
+export const defaultQueryOptions: QueryContextOptions;
+
 export function useQueryConfig (): QueryContextOptions;
 export function QueryProvider (props: QueryProviderProps): VNode<any>;
