@@ -3,7 +3,6 @@ import { useReducer } from 'preact/hooks';
 
 function init () {
 	return {
-		promise: null,
 		status: 'idle',
 		data: null,
 		error: null,
@@ -16,7 +15,7 @@ export function useMutation (mutation, options) {
 	const [state, update] = useReducer(updateReducer, null, init);
 
 	const mutate = async (variables) => {
-		return state.promise ||= (async () => {
+		return update.promise ||= (async () => {
 			update((prev) => ({
 				...prev,
 				status: prev.status === 'idle' ? 'loading' : prev.status,
@@ -37,7 +36,8 @@ export function useMutation (mutation, options) {
 				onError?.(error, variables, context);
 			}
 			finally {
-				state.promise = null;
+				update.promise = null;
+
 				update((prev) => ({ ...prev, mutating: false }));
 				onSettled?.(variables, context);
 			}
@@ -45,7 +45,7 @@ export function useMutation (mutation, options) {
 	};
 
 	const reset = () => {
-		if (state.promise) {
+		if (update.promise) {
 			return;
 		}
 
