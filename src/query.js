@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'preact/hooks';
-import { stringify } from '@intrnl/stable-stringify';
+import { stableStringify } from '@intrnl/stable-stringify';
 
 import { useQueryConfig } from './context.js';
 import { listenFocusChange } from './focus.js';
@@ -26,7 +26,7 @@ export function useQuery (options) {
 
 	const forceUpdate = useForceUpdate();
 
-	const hash = stringify(key);
+	const hash = stableStringify(key);
 	let query = cache.get(hash);
 
 	if (!query) {
@@ -50,7 +50,7 @@ export function useQuery (options) {
 				query.update((prev) => ({
 					...prev,
 					status: 'success',
-					data: stringify(prev.data) === stringify(data) ? prev.data : data,
+					data: stableStringify(prev.data) === stableStringify(data) ? prev.data : data,
 					error: null,
 					updated: Date.now(),
 				}));
@@ -145,7 +145,7 @@ export function useQuery (options) {
 export function mutateQuery (cache, key, data, invalidate = true) {
 	const exists = data != null;
 
-	const hash = stringify(key);
+	const hash = stableStringify(key);
 	let query = cache.get(hash);
 
 	if (!query) {
@@ -173,7 +173,7 @@ export function mutateQuery (cache, key, data, invalidate = true) {
 
 export function invalidateQueries (cache, keys, exclude) {
 	const all = !keys.length;
-	const hashEnd = stringify(keys);
+	const hashEnd = stableStringify(keys);
 	const hashTrail = hashEnd.slice(0, -1) + ',';
 
 	for (const [key, query] of cache) {

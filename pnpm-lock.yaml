@@ -1,19 +1,19 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@intrnl/stable-stringify': ^0.1.0
+  '@intrnl/stable-stringify': ^0.1.1
   preact: ^10.6.2
 
 dependencies:
-  '@intrnl/stable-stringify': 0.1.0
+  '@intrnl/stable-stringify': 0.1.1
 
 devDependencies:
   preact: 10.6.2
 
 packages:
 
-  /@intrnl/stable-stringify/0.1.0:
-    resolution: {integrity: sha512-YCD04p8B31Ga9/koWpbtCxN+jkmWFd0a8F+CLfSKuK/UaxDlJRJRsmvyfO959QUly/M1ux6Asvb30Bzh26Umtg==}
+  /@intrnl/stable-stringify/0.1.1:
+    resolution: {integrity: sha512-uvKA+iE1iNFOPfBkZwwz9m95cbgDG6elnSF2oV51D9gbTBtTWPqBsOoODqq5+EvJwj35UuCW+nU1yCgPuJ+aWw==}
     dev: false
 
   /preact/10.6.2:
