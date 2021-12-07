@@ -79,6 +79,10 @@ export function useQuery (options) {
 		const unsubscribe = query.subscribe(forceUpdate);
 		clearTimeout(query.timeout);
 
+		if (!disabled && revalidateOnMount) {
+			revalidate();
+		}
+
 		return () => {
 			unsubscribe();
 
@@ -100,14 +104,6 @@ export function useQuery (options) {
 			}
 		};
 	}, [query]);
-
-	useEffect(() => {
-		if (disabled || !revalidateOnMount) {
-			return;
-		}
-
-		revalidate();
-	}, [disabled, query]);
 
 	useEffect(() => {
 		if (disabled || !revalidateOnFocus) {
