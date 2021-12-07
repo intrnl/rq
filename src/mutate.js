@@ -19,7 +19,7 @@ export function useInvalidate (options) {
 
 	const { cache } = options;
 
-	return useCallback((keys) => (
-		invalidateQueries(cache, keys)
+	return useCallback((keys, reverse) => (
+		invalidateQueries(cache, keys, reverse)
 	), [cache]);
 }

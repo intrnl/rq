@@ -161,12 +161,15 @@ export function mutateQuery (cache, key, data, invalidate = true) {
 	}));
 }
 
-export function invalidateQueries (cache, keys) {
+export function invalidateQueries (cache, keys, reverse) {
+	const all = !keys.length;
 	const hashEnd = stringify(keys);
 	const hashTrail = hashEnd.slice(0, -1) + ',';
 
 	for (const [key, query] of cache) {
-		if (key === hashEnd || key.startsWith(hashTrail)) {
+		const check = all || key === hashEnd || key.startsWith(hashTrail);
+
+		if (reverse ? !check : check) {
 			query.update((prev) => ({ ...prev, invalidated: true }));
 		}
 	}
