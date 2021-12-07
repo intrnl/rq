@@ -57,6 +57,6 @@ export interface QueryOptions<D, K extends QueryKey = QueryKey> extends QueryCon
 
 export function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOptions<D, K>): QueryState<D>;
 
-export function mutateQuery (cache: QueryCache, key: QueryKey, data: any, invalidate?: boolean): void;
+export function mutateQuery (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean): void;
 
 export function invalidateQueries (cache: QueryCache, keys: QueryKey, exclude?: boolean): void;
