@@ -45,7 +45,7 @@ export function useMutation (mutation, options = {}) {
 				update((prev) => ({ ...prev, mutating: false }));
 				await onSettled?.(data, error, variables, context);
 			}
-		});
+		})();
 	};
 
 	const reset = () => {
