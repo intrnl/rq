@@ -171,7 +171,7 @@ export function mutateQuery (cache, key, data, invalidate = true) {
 	}));
 }
 
-export function invalidateQueries (cache, keys, reverse) {
+export function invalidateQueries (cache, keys, exclude) {
 	const all = !keys.length;
 	const hashEnd = stringify(keys);
 	const hashTrail = hashEnd.slice(0, -1) + ',';
@@ -179,7 +179,7 @@ export function invalidateQueries (cache, keys, reverse) {
 	for (const [key, query] of cache) {
 		const check = all || key === hashEnd || key.startsWith(hashTrail);
 
-		if (reverse ? !check : check) {
+		if (exclude ? !check : check) {
 			query.update((prev) => ({ ...prev, invalidated: true }));
 		}
 	}
