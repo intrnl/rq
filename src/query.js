@@ -110,8 +110,7 @@ export function useQuery (options) {
 			return;
 		}
 
-		const unsubscribeFocus = listenFocusChange(revalidate);
-		return unsubscribeFocus;
+		return listenFocusChange(revalidate);
 	}, [disabled, query, revalidateOnFocus]);
 
 
