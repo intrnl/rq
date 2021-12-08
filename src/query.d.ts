@@ -66,4 +66,4 @@ export function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOption
 
 export function mutateQuery (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean): void;
 
-export function invalidateQueries (cache: QueryCache, keys: QueryKey, exclude?: boolean): void;
+export function invalidateQueries (cache: QueryCache, keys: QueryKey): void;
