@@ -20,6 +20,8 @@ export function useQuery (options) {
 		revalidateOnMount,
 		revalidateOnFocus,
 
+		structuralSharing,
+
 		suspense,
 		errorBoundary,
 	} = options;
@@ -50,7 +52,9 @@ export function useQuery (options) {
 				query.update((prev) => ({
 					...prev,
 					status: 'success',
-					data: stableStringify(prev.data) === stableStringify(data) ? prev.data : data,
+					data: structuralSharing
+						? shareStructural(prev.data, data)
+						: stableStringify(prev.data) === stableStringify(data) ? prev.data : data,
 					error: null,
 					updated: Date.now(),
 				}));
@@ -218,6 +222,52 @@ class Query {
 	}
 }
 
+// Structural sharing
+function shareStructural (a, b) {
+	if (a === b) {
+		return a;
+	}
+
+	let arr = isArray(a) && isArray(b);
+	let obj =	isPlainObject(a) && isPlainObject(b);
+
+	if (arr || obj) {
+    const bItems = arr ? b : Object.keys(b);
+
+    const aSize = arr ? a.length : Object.keys(a).length;
+    const bSize = bItems.length;
+
+		const copy = arr ? [] : {};
+
+    let equalItems = 0;
+
+    for (let i = 0; i < bSize; i++) {
+      const key = array ? i : bItems[i]
+      copy[key] = shareStructural(a[key], b[key])
+
+      if (copy[key] === a[key]) {
+        equalItems++
+      }
+    }
+
+    return aSize === bSize && equalItems === aSize ? a : copy
+	}
+
+	return b;
+}
+
+function isArray (value) {
+	return Array.isArray(value);
+}
+
+function isPlainObject (value) {
+	if (!value || typeof value !== 'object') {
+		return false;
+	}
+
+	const prototype = Object.getPrototypeOf(value);
+	return prototype === null || prototype === Object.prototype;
+}
 
 // useForceUpdate
 function useForceUpdate () {
