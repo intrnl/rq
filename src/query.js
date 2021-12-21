@@ -242,7 +242,7 @@ function shareStructural (a, b) {
     let equalItems = 0;
 
     for (let i = 0; i < bSize; i++) {
-      const key = array ? i : bItems[i]
+      const key = arr ? i : bItems[i]
       copy[key] = shareStructural(a[key], b[key])
 
       if (copy[key] === a[key]) {

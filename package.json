@@ -3,7 +3,7 @@
 	"sideEffects": false,
 	"name": "@intrnl/rq",
 	"description": "Lightweight data fetching library for Preact",
-	"version": "0.1.10",
+	"version": "0.1.11",
 	"author": "intrnl",
 	"license": "MIT",
 	"repository": {
