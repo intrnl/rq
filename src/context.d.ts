@@ -22,6 +22,8 @@ export interface QueryContextOptions<D = unknown, K extends QueryKey = QueryKey>
 	revalidateOnMount?: boolean;
 	revalidateOnFocus?: boolean;
 
+	isDataEqual?: (prev?: D, next: D) => D,
+
 	suspense?: boolean;
 	errorBoundary?: boolean;
 }

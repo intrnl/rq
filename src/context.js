@@ -1,6 +1,8 @@
 import { h, createContext } from 'preact';
 import { useContext, useMemo } from 'preact/hooks';
 
+import { stableStringify } from '@intrnl/stable-stringify';
+
 
 export const defaultQueryOptions = {
 	cache: new Map(),
@@ -9,6 +11,11 @@ export const defaultQueryOptions = {
 	cacheTime: 5 * 60 * 1000,
 	revalidateOnMount: true,
 	revalidateOnFocus: true,
+
+	isDataEqual: (prev, next) =>
+		prev === next || stableStringify(prev) === stableStringify(next)
+			? prev
+			: next,
 };
 
 const QueryContext = createContext(defaultQueryOptions);

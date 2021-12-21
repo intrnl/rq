@@ -20,7 +20,7 @@ export function useQuery (options) {
 		revalidateOnMount,
 		revalidateOnFocus,
 
-		structuralSharing,
+		isDataEqual,
 
 		suspense,
 		errorBoundary,
@@ -52,7 +52,7 @@ export function useQuery (options) {
 				query.update((prev) => ({
 					...prev,
 					status: 'success',
-					data: stableStringify(prev.data) === stableStringify(data) ? prev.data : data,
+					data: isDataEqual(prev.data, data),
 					error: null,
 					updated: Date.now(),
 				}));
