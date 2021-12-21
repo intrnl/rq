@@ -9,8 +9,6 @@ export const defaultQueryOptions = {
 	cacheTime: 5 * 60 * 1000,
 	revalidateOnMount: true,
 	revalidateOnFocus: true,
-
-	structuralSharing: true,
 };
 
 const QueryContext = createContext(defaultQueryOptions);
