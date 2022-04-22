@@ -3,14 +3,14 @@ import { VNode, ComponentChildren } from 'preact';
 import { Query } from './query';
 
 
-type Promisable<T> = T | Promise<T>;
+declare type Promisable<T> = T | Promise<T>;
 
-export type QueryKey = string | readonly unknown[];
-export type EnsuredQueryKey<T extends QueryKey> = T extends string ? [T] : T;
+export declare type QueryKey = string | readonly unknown[];
+export declare type EnsuredQueryKey<T extends QueryKey> = T extends string ? [T] : T;
 
-export type QueryFunction<D, K extends QueryKey = QueryKey> = (...params: EnsuredQueryKey<K>) => Promisable<D>;
+export declare type QueryFunction<D, K extends QueryKey = QueryKey> = (...params: EnsuredQueryKey<K>) => Promisable<D>;
 
-export type QueryCache = Map<string, Query<any>>;
+export declare type QueryCache = Map<string, Query<any>>;
 
 export interface QueryContextOptions<D = unknown, K extends QueryKey = QueryKey> {
 	fetch?: QueryFunction<D, K>;
@@ -33,7 +33,7 @@ export interface QueryProviderProps {
 	children: ComponentChildren;
 }
 
-export const defaultQueryOptions: QueryContextOptions;
+export declare const defaultQueryOptions: QueryContextOptions;
 
-export function useQueryConfig (): QueryContextOptions;
-export function QueryProvider (props: QueryProviderProps): VNode<any>;
+export declare function useQueryConfig (): QueryContextOptions;
+export declare function QueryProvider (props: QueryProviderProps): VNode<any>;

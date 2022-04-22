@@ -1,7 +1,7 @@
 import { QueryContextOptions, QueryKey, QueryCache } from './context';
 
 
-type Promisable<T> = T | Promise<T>;
+declare type Promisable<T> = T | Promise<T>;
 
 export interface QueryLoadingState {
 	status: 'loading';
@@ -30,7 +30,7 @@ export interface QueryErrorState {
 	invalidated: boolean;
 }
 
-export type QueryState<T> =
+export declare type QueryState<T> =
 	| QueryLoadingState
 	| QuerySuccessState<T>
 	| QueryErrorState
@@ -40,7 +40,7 @@ export interface QueryMethods<D> {
 	revalidate (): void;
 }
 
-export type QueryResult<D> = QueryState<D> & QueryMethods<D>;
+export declare type QueryResult<D> = QueryState<D> & QueryMethods<D>;
 
 export interface Query<T> {
 	listeners: Set<() => void>;
@@ -62,8 +62,8 @@ export interface QueryOptions<D, K extends QueryKey = QueryKey> extends QueryCon
 	disabled?: boolean;
 }
 
-export function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOptions<D, K>): QueryResult<D>;
+export declare function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOptions<D, K>): QueryResult<D>;
 
-export function mutateQuery (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean): void;
+export declare function mutateQuery (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean): void;
 
-export function invalidateQueries (cache: QueryCache, keys: QueryKey): void;
+export declare function invalidateQueries (cache: QueryCache, keys: QueryKey): void;

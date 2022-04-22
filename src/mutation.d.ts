@@ -1,4 +1,4 @@
-type Promisable<T> = T | Promise<T>;
+declare type Promisable<T> = T | Promise<T>;
 
 export interface MutationIdleState {
 	status: 'idle';
@@ -28,7 +28,7 @@ export interface MutationErrorState {
 	mutating: boolean;
 }
 
-export type MutationState<T> =
+export declare type MutationState<T> =
 	| MutationIdleState
 	| MutationLoadingState
 	| MutationSuccessState<T>
@@ -39,9 +39,9 @@ export interface MutationMethods<V> {
 	reset (): void;
 }
 
-export type MutationResult<D, V> = MutationState<D> & MutationMethods<V>;
+export declare type MutationResult<D, V> = MutationState<D> & MutationMethods<V>;
 
-export type Mutation<D, V> = (variables: V) => Promisable<D>;
+export declare type Mutation<D, V> = (variables: V) => Promisable<D>;
 
 export interface MutationOptions<D = unknown, V = unknown, C = unknown> {
 	onMutate (variables: V): Promisable<C>;
@@ -50,7 +50,7 @@ export interface MutationOptions<D = unknown, V = unknown, C = unknown> {
 	onSettled (data: D, error: unknown, variables: V, context: C): Promisable<void>;
 }
 
-export function useMutation<D, V, C> (
+export declare function useMutation<D, V, C> (
 	mutation: Mutation<D, V>,
 	options?: MutationOptions<D, V, C>
 ): MutationResult<D, V>;

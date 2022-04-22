@@ -1,5 +1,5 @@
-export type FocusHandler = (callback: () => void) => void;
+export declare type FocusHandler = (callback: () => void) => void;
 
-export function listenFocusChange (callback: () => void): void;
+export declare function listenFocusChange (callback: () => void): void;
 
-export function setFocusHandler (handler: FocusHandler): void;
+export declare function setFocusHandler (handler: FocusHandler): void;
