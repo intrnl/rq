@@ -4,7 +4,7 @@ import { useQueryConfig } from './context.js';
 import { mutateQuery, invalidateQueries } from './query.js';
 
 
-export function useMutate (options) {
+export const useMutate = (options) => {
 	options = { ...useQueryConfig(), ...options };
 
 	const { cache } = options;
@@ -12,9 +12,9 @@ export function useMutate (options) {
 	return useCallback((key, data, invalidate) => (
 		mutateQuery(cache, key, data, invalidate)
 	), [cache]);
-}
+};
 
-export function useInvalidate (options) {
+export const useInvalidate = (options) => {
 	options = { ...useQueryConfig(), ...options };
 
 	const { cache } = options;
@@ -22,4 +22,4 @@ export function useInvalidate (options) {
 	return useCallback((keys) => (
 		invalidateQueries(cache, keys)
 	), [cache]);
-}
+};

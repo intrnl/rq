@@ -1,21 +1,21 @@
 const listeners = new Set();
 let cleanup;
 
-export function listenFocusChange (listener) {
+export const listenFocusChange = (listener) => {
 	listeners.add(listener);
 	return () => listeners.delete(listener);
-}
+};
 
-export function setFocusHandler (handler) {
+export const setFocusHandler = (handler) => {
 	cleanup?.();
 	cleanup = handler(notifyListeners);
-}
+};
 
-function notifyListeners () {
+const notifyListeners = () => {
 	for (const listener of listeners) {
 		listener();
 	}
-}
+};
 
 
 setFocusHandler((handleFocus) => {

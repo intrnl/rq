@@ -20,11 +20,11 @@ export const defaultQueryOptions = {
 
 const QueryContext = createContext(defaultQueryOptions);
 
-export function useQueryConfig () {
+export const useQueryConfig = () => {
 	return useContext(QueryContext);
-}
+};
 
-export function QueryProvider (props) {
+export const QueryProvider = (props) => {
 	const { options: next, children } = props;
 
 	const prev = useQueryConfig();
@@ -35,4 +35,4 @@ export function QueryProvider (props) {
 	);
 
 	return h(QueryContext.Provider, { value: mergedOptions, children });
-}
+};

@@ -62,8 +62,8 @@ export interface QueryOptions<D, K extends QueryKey = QueryKey> extends QueryCon
 	disabled?: boolean;
 }
 
-export declare function useQuery<D, K extends QueryKey = QueryKey> (options: QueryOptions<D, K>): QueryResult<D>;
+export declare const useQuery: <D, K extends QueryKey = QueryKey>(options: QueryOptions<D, K>) => QueryResult<D>;
 
-export declare function mutateQuery (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean): void;
+export declare const mutateQuery: (cache: QueryCache, key: QueryKey, data?: any, invalidate?: boolean) => void;
 
-export declare function invalidateQueries (cache: QueryCache, keys: QueryKey): void;
+export declare const invalidateQueries: (cache: QueryCache, keys: QueryKey) => void;

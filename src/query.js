@@ -5,7 +5,7 @@ import { useQueryConfig } from './context.js';
 import { listenFocusChange } from './focus.js';
 
 
-export function useQuery (options) {
+export const useQuery = (options) => {
 	options = { ...useQueryConfig(), ...options };
 
 	const {
@@ -137,9 +137,9 @@ export function useQuery (options) {
 	}
 
 	return { ...state, mutate, revalidate };
-}
+};
 
-export function mutateQuery (cache, key, data, invalidate = true) {
+export const mutateQuery = (cache, key, data, invalidate = true) => {
 	const exists = data != null;
 
 	const hash = stableStringify(key);
@@ -166,9 +166,9 @@ export function mutateQuery (cache, key, data, invalidate = true) {
 		updated: exists ? Date.now() : prev.updated,
 		invalidated: invalidate,
 	}));
-}
+};
 
-export function invalidateQueries (cache, keys) {
+export const invalidateQueries = (cache, keys) => {
 	const array = Array.isArray(keys);
 
 	const all = !keys.length;
@@ -182,7 +182,7 @@ export function invalidateQueries (cache, keys) {
 			query.update((prev) => ({ ...prev, invalidated: true }));
 		}
 	}
-}
+};
 
 
 class Query {
@@ -221,10 +221,10 @@ class Query {
 }
 
 // useForceUpdate
-function useForceUpdate () {
+const useForceUpdate = () => {
 	return useReducer(updateReducer)[1];
-}
+};
 
-function updateReducer () {
+const updateReducer = () => {
 	return {};
-}
+};

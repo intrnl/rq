@@ -50,7 +50,7 @@ export interface MutationOptions<D = unknown, V = unknown, C = unknown> {
 	onSettled (data: D, error: unknown, variables: V, context: C): Promisable<void>;
 }
 
-export declare function useMutation<D, V, C> (
+export declare const useMutation: <D, V, C>(
 	mutation: Mutation<D, V>,
 	options?: MutationOptions<D, V, C>
-): MutationResult<D, V>;
+) => MutationResult<D, V>;

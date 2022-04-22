@@ -1,16 +1,16 @@
 import { useReducer } from 'preact/hooks';
 
 
-function init () {
+const init = () => {
 	return {
 		status: 'idle',
 		data: null,
 		error: null,
 		mutating: false,
 	};
-}
+};
 
-export function useMutation (mutation, options = {}) {
+export const useMutation = (mutation, options = {}) => {
 	const { onMutate, onSuccess, onError, onSettled } = options;
 	const [state, update] = useReducer(updateReducer, null, init);
 
@@ -57,8 +57,8 @@ export function useMutation (mutation, options = {}) {
 	};
 
 	return { ...state, mutate, reset };
-}
+};
 
-function updateReducer (current, updater) {
+const updateReducer = (current, updater) => {
 	return updater(current);
-}
+};

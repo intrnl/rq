@@ -35,5 +35,5 @@ export interface QueryProviderProps {
 
 export declare const defaultQueryOptions: QueryContextOptions;
 
-export declare function useQueryConfig (): QueryContextOptions;
-export declare function QueryProvider (props: QueryProviderProps): VNode<any>;
+export declare const useQueryConfig: () => QueryContextOptions;
+export declare const QueryProvider: (props: QueryProviderProps) => VNode<any>;
